@@ -52,19 +52,29 @@ function updateArray(value) {
 
         temporary = currentCalculation[currentCalculation.length - 1];
 
-        currentCalculation.pop();
+        if (temporary === ")") {
+            currentCalculation.pop();
+            parenthesis = true;
+        }
 
-        temporaryArray = temporary.split("");
+        else if (temporary === "(") {
+            currentCalculation.pop();
+            parenthesis = false;
+        }
+        else {
+            currentCalculation.pop();
 
-        temporaryArray.pop();
+            temporaryArray = temporary.split("");
 
-        temporary = temporaryArray.join("");
+            temporaryArray.pop();
 
-        console.log()
+            temporary = temporaryArray.join("");
 
-        currentCalculation.push(temporary);
+            console.log()
 
+            currentCalculation.push(temporary);
 
+        }
         }
     
 
@@ -84,21 +94,22 @@ function updateArray(value) {
     
         else {
             
-        if (value === "delete") {
-        }
-
-        else currentCalculation.push(value);
-        if (value === "()") {
-            if (parenthesis === false) {
-                value = "(";
-                parenthesis = true;
+            if (value === "delete") {
             }
+
             else {
+                if (value === "()") {
+                    if (parenthesis === false) {
+                        value = "(";
+                        parenthesis = true;
+                    }       
+                 else {
                 value = ")";
-                parenthesis = false;
+                    parenthesis = false;
+                }
+                }
+            currentCalculation.push(value);
             }
-            }
-
         }
         updateScreen(currentCalculation.join(""));
         console.log(currentCalculation.join(""));
@@ -109,16 +120,23 @@ function updateValue(number) {
     else {
     currentValue += number;
     }
-    result.innerText = currentValue;
+    operation.innerText = currentCalculation.join("") + currentValue;
 }
 
-function calculate (arr) {}
+function calculate (arr) {
+    return "";
+}
 
 function updateScreen(value) {
     operation.innerText = value;
-    result.innerText = "";
+    result.innerText = calculate(value);;
 }
-function clearScreen() {}
+function clearScreen() {
+    currentCalculation = [];
+    currentValue = null;
+    parenthesis = false;
+    updateScreen("");
+}
 
 
 // there are some issues with updating the screen
