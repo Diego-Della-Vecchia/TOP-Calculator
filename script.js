@@ -1,6 +1,6 @@
-/*const operation = document.querySelector(".operation");
+const operation = document.querySelector(".operation");
 const result = document.querySelector(".result");
-const clear = document.querySelector(".clear");
+/*const clear = document.querySelector(".clear");
 const back = document.querySelector(".delete");
 const parenthesis = document.querySelector(".parenthesis");
 const percentage = document.querySelector(".percentage");
@@ -50,8 +50,6 @@ function updateArray(value) {
 
     if (value === "delete") {
 
-        
-        console.log("delete")
         temporary = currentCalculation[currentCalculation.length - 1];
 
         currentCalculation.pop();
@@ -100,12 +98,10 @@ function updateArray(value) {
                 parenthesis = false;
             }
             }
-        
-        
-    console.log(currentCalculation);
-    updateScreen(currentCalculation.toString());
+
         }
-    
+        updateScreen(currentCalculation.join(""));
+        console.log(currentCalculation.join(""));
     } 
 
 function updateValue(number) {
@@ -113,10 +109,16 @@ function updateValue(number) {
     else {
     currentValue += number;
     }
+    result.innerText = currentValue;
 }
 
 function calculate (arr) {}
 
-function updateScreen(value) {}
-
+function updateScreen(value) {
+    operation.innerText = value;
+    result.innerText = "";
+}
 function clearScreen() {}
+
+
+// there are some issues with updating the screen

@@ -69,5 +69,18 @@ button:active {
     height: 80px;
 }
 
+.screen {
+    text-align: end;
+    color: #3D005B;
+}
 
+.result {
+    font-size: 70px;
+    text-align: end;
+}
 
+.operation {
+    font-size: 30px;
+    text-align: end;
+    padding: 10px 15px 0px 0px;
+}
