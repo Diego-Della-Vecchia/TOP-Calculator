@@ -1,0 +1,73 @@
+* {
+    font-family: "Chewy", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px;
+    margin:0px
+  }
+
+  .title {
+    font-size: 120px;
+    color: #3D005B;
+  }
+
+  
+.container {
+    width: 500px;
+    background-color: #D1B2E0;   
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-bottom: 20px;
+    gap: 20px;
+   
+}
+
+.screen {
+    background-color: #E1E0E0;
+    width: 440px;
+    height: 130px;
+    margin: 25px ;
+    border-radius: 20px 20px 5px 5px;
+}
+
+button {
+    width: 100px;
+    height: 100px;
+    border-radius: 15px;
+    border: 2px solid #3D005B;
+    font-size: 40px;
+    color:#3D005B;
+}
+
+
+button:hover {
+    background-color: #E1E0E0;
+}
+
+button:active {
+    background-color: #3D005B;
+    color: white;
+    border: solid white 2px;
+}
+
+.operation{
+    height: 50px;
+}
+
+.result {
+    height: 80px;
+}
+
+
+
