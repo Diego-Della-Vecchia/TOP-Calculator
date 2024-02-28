@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Calculator</title>
     <link rel="icon" type="image/x" href="Classflow.svg">
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,26 +17,26 @@
             <div class="operation"></div>
             <div class="result"></div>
         </div>
-        <button class="clear">AC</button>
-        <button class="delete">C</button>
-        <button class="parenthesis">( )</button>
-        <button class="percentage">%</button>
-        <button class="1">1</button>
-        <button class="2">2</button>
-        <button class="3">3</button>
-        <button class="divison">÷</button>
-        <button class="4">4</button>
-        <button class="5">5</button>
-        <button class="6">6</button>
-        <button class="multiplication">*</button>
-        <button class="7">7</button>
-        <button class="8">8</button>
-        <button class="9">9</button>
-        <button class="minus">-</button>
-        <button class="decimals">.</button>
-        <button class="0">0</button>
-        <button class="equals">=</button>
-        <button class="plus">+</button>
+        <button class="clear" onclick="clearScreen()">AC</button>
+        <button class="delete" onclick="updateArray('delete')">C</button>
+        <button class="parenthesis" onclick="updateArray('()')">( )</button>
+        <button class="percentage" onclick="updateArray('%')">%</button>
+        <button class="1" onclick="updateValue('1')">1</button>
+        <button class="2" onclick="updateValue('2')">2</button>
+        <button class="3" onclick="updateValue('3')">3</button>
+        <button class="divison" onclick="updateArray('/')">÷</button>
+        <button class="4" onclick="updateValue('4')">4</button>
+        <button class="5" onclick="updateValue('5')">5</button>
+        <button class="6" onclick="updateValue('6')">6</button>
+        <button class="multiplication" onclick="updateArray('*')">*</button>
+        <button class="7" onclick="updateValue('7')">7</button>
+        <button class="8" onclick="updateValue('8')">8</button>
+        <button class="9" onclick="updateValue('9')">9</button>
+        <button class="minus" onclick="updateArray('-')">-</button>
+        <button class="decimals" onclick="updateArray('.')">.</button>
+        <button class="0" onclick="updateArray('0')">0</button>
+        <button class="equals" onclick="calculate">=</button>
+        <button class="plus" onclick="updateArray('+')">+</button>
     </div>
 </body>
 </html>
