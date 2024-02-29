@@ -68,21 +68,22 @@ function updateArray(value) {
 
             temporaryArray.pop();
 
+            if (temporaryArray.length === 0) {
+
+            }
+            else {
             temporary = temporaryArray.join("");
 
-            console.log()
-
             currentCalculation.push(temporary);
-
+            }
         }
         }
     
 
     
 
-    if (currentCalculation.length === 0){
-        console.log("zero")
-    }
+    if (currentCalculation.length === 0){}
+
     else if (
         currentCalculation[currentCalculation.length-1] === "+" ||
         currentCalculation[currentCalculation.length-1] === "-" ||
@@ -112,8 +113,8 @@ function updateArray(value) {
             }
         }
         updateScreen(currentCalculation.join(""));
-        console.log(currentCalculation.join(""));
     } 
+
 
 function updateValue(number) {
     if (currentValue === null) currentValue = number;
@@ -121,15 +122,13 @@ function updateValue(number) {
     currentValue += number;
     }
     operation.innerText = currentCalculation.join("") + currentValue;
-}
-
-function calculate (arr) {
-    return "";
+    result.innerText = calculate(currentCalculation.push(currentValue));
+    currentCalculation.pop();
 }
 
 function updateScreen(value) {
     operation.innerText = value;
-    result.innerText = calculate(value);;
+    result.innerText = calculate(currentCalculation);;
 }
 function clearScreen() {
     currentCalculation = [];
@@ -139,4 +138,11 @@ function clearScreen() {
 }
 
 
-// there are some issues with updating the screen
+function calculate (arr) {
+    console.log(arr)
+    if (arr.length === 1)
+    { 
+        return currentValue;
+    }
+    else return "";
+}
