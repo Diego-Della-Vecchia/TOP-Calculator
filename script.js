@@ -215,8 +215,7 @@ function calculate (arr) {
                     delete(arr[closestNumberUp(arr, b)])
                 }
         }
-        
-        console.log(arr)
+    
         for (let a = 0; a < arr.length; a++){
             if (arr[a] != undefined){
                result = arr[a];
@@ -246,9 +245,31 @@ function closestNumberUp(array, index) {
     }
 }
 
+let operationDone = false;
+
+let allButtons = document.querySelectorAll("button");
+
+let equals = document.querySelector(".equals");
+
+allButtons.forEach(button => {
+    addEventListener("click", (button) => {
+        if (operationDone === true && button.target != equals) {
+            operation.classList.toggle("operationDone");
+            result.classList.toggle("resultDone");
+            operationDone = false;  
+        }
+    })});
+
+
 
 function enter() {
-   operation.classList.toggle("operationDone");
-    result.classList.toggle("resultDone");
-  
+    currentCalculation.push(currentValue)
+    if( operationDone === false && currentCalculation.length  >= 3 && currentValue != null && currentValue != "" ){
+        
+        operation.classList.toggle("operationDone");
+        result.classList.toggle("resultDone");
+        operationDone = true;
+    }
+    currentCalculation.pop();
+    
 }
