@@ -44,7 +44,7 @@
 button {
     width: 100px;
     height: 100px;
-    border-radius: 15px;
+    border-radius: 50px;
     border: 2px solid #3D005B;
     font-size: 40px;
     color:#3D005B;
@@ -56,9 +56,8 @@ button:hover {
 }
 
 button:active {
-    background-color: #3D005B;
-    color: white;
-    border: solid white 2px;
+    background-color: #E1E0E0;
+    border-radius: 35px;
 }
 
 .operation{
@@ -73,6 +72,7 @@ button:active {
     height: 50px;
     font-size: 30px;
     text-align: end;
+    padding-right: 15px;
 }
 
 .screen {
