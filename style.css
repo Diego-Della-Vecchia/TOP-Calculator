@@ -36,9 +36,10 @@
 .screen {
     background-color: #E1E0E0;
     width: 440px;
-    height: 130px;
+    height: 160px;
     margin: 25px ;
     border-radius: 20px 20px 5px 5px;
+    color: #3D005B;
 }
 
 button {
@@ -61,40 +62,60 @@ button:active {
 }
 
 .operation{
-    height: 80px;
+    height: 95px;
     font-size: 70px;
     text-align: end;
     padding-right: 15px;
-    overflow:hidden;
+    padding-left: 15px;
+
 }
 
 .result {
-    height: 50px;
+    height: 65px;
     font-size: 30px;
-    text-align: end;
     padding-right: 15px;
+    padding-bottom: 5px;
 }
 
-.screen {
-    color: #3D005B;
-}
+
 
 .resultDone {
-    height: 80px;
+   
+    height: 95px;
     font-size: 70px;
     text-align: end;
     padding-right: 15px;
-    overflow:hidden;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    padding-left: 15px;
+    
 }
 
 .operationDone {
-   
-    height: 50px;
+    padding-top: 10px;
+   padding-bottom: 20px;
+    height: 65px;
     font-size: 30px;
-    text-align: end;
     padding-right: 15px;
+
 }
 
+.operation, .result, .resultDone, .operationDone {
+    overflow:auto;
+    overflow-y: hidden;
+    text-align: end;
+
+}
+
+
+ ::-webkit-scrollbar {
+    background-color: #E1E0E0;
+    
+}
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #3d005b;
+        border-radius: 10px;
+      
+    }
+    
+   
+    

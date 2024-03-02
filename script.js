@@ -1,5 +1,6 @@
 const operation = document.querySelector(".operation");
 const result = document.querySelector(".result");
+const screen = document.querySelector(".screen");
 
 let currentCalculation = [];
 
@@ -59,17 +60,17 @@ function updateArray(value) {
 
     
 
-    if (currentCalculation.length === 0){}
+    if (currentCalculation.length === 0 && value != "()"){} 
 
-    else if (
+    else if ( value != "()" &&(
         currentCalculation[currentCalculation.length-1] === "+" ||
         currentCalculation[currentCalculation.length-1] === "-" ||
-        currentCalculation[currentCalculation.length-1] === "(" ||
-        currentCalculation[currentCalculation.length-1] === ")" ||
         currentCalculation[currentCalculation.length-1] === "%" ||
+       
         currentCalculation[currentCalculation.length-1] === "/" ||
-        currentCalculation[currentCalculation.length-1] === "*"){}
+        currentCalculation[currentCalculation.length-1] === "*")){}
     
+    else if (value === "()" && currentCalculation[currentCalculation.length-1] === "(" || currentCalculation[currentCalculation.length-1] === ")"){} 
         else {
             
             if (value === "delete") {
@@ -90,7 +91,9 @@ function updateArray(value) {
             }
         }
         updateScreen(currentCalculation.join(""));
+        
     } 
+
 
 
 function updateValue(number) {
@@ -103,15 +106,20 @@ function updateValue(number) {
         if (currentValue.includes(".") && number === ".") {}
     else currentValue += number;
     }
-    operation.innerText = currentCalculation.join("") + currentValue;
     currentCalculation.push(currentValue);
-    result.innerText = calculate(currentCalculation);
+    updateScreen(currentCalculation.join(""));
     currentCalculation.pop();
-}
+
+    
+    }
+
+
+
 
 function updateScreen(value) {
     operation.innerText = value;
     result.innerText = calculate(currentCalculation);
+
 }
 function clearScreen() {
     currentCalculation = [];
@@ -141,6 +149,19 @@ function calculate (arr) {
         
     }
 
+    if (
+        arr[arr.length-1] === "+" ||
+        arr[arr.length-1] === "-" ||
+        arr[arr.length-1] === "(" ||
+        arr[arr.length-1] === ")" ||
+        arr[arr.length-1] === "%" ||
+        arr[arr.length-1] === "/" ||
+        arr[arr.length-1] === "*"){
+            
+            arr.pop();
+            
+        }
+
     let result;
 
     for(let i = 0; i < arr.length; i++) {
@@ -154,31 +175,34 @@ function calculate (arr) {
             delete arr[j]
             i++
             for (;i < j; i++){
-                if (arr[i] === "*"){
-                    arr[i] = arr[closestNumberDown(arr, i)] * arr[closestNumberUp(arr, i)]
-                    delete(arr[closestNumberDown(arr, i)])
-                    delete(arr[closestNumberUp(arr, i)])
-                }
-                else if (arr[i] === "/"){
-                    arr[i] = arr[closestNumberDown(arr, i)] / arr[closestNumberUp(arr, i)]
-                    delete(arr[closestNumberDown(arr, i)])
-                    delete(arr[closestNumberUp(arr, i)])
-                }
-                else if (arr[i] === "%"){
-                    arr[i] = arr[closestNumberDown(arr, i)] & arr[closestNumberUp(arr, i)]
-                    delete(arr[closestNumberDown(arr, i)])
-                    delete(arr[closestNumberUp(arr, i)])
-                }
-                else if (arr[i] === "+"){
-                    arr[i] == arr[closestNumberDown(arr, i)] + arr[closestNumberUp(arr, i)]
-                    delete(arr[closestNumberDown(arr, i)])
-                    delete(arr[closestNumberUp(arr, i)])
-                }
-                else if (arr[i] === "-"){
-                    arr[i] == arr[closestNumberDown(arr, i)] + arr[closestNumberUp(arr, i)]
-                    delete(arr[closestNumberDown(arr, i)])
-                    delete(arr[closestNumberUp(arr, i)])
-                }
+                if (arr[y] === "*"){
+                    arr[y] = arr[closestNumberDown(arr, y)] * arr[closestNumberUp(arr, y)]
+                    delete(arr[closestNumberDown(arr, y)])
+                    delete(arr[closestNumberUp(arr, y)])
+                    }
+                    else if (arr[y] === "/"){
+                        arr[y] = arr[closestNumberDown(arr, y)] / arr[closestNumberUp(arr, y)]
+                        delete(arr[closestNumberDown(arr, y)])
+                        delete(arr[closestNumberUp(arr, y)])
+                        }
+                    else if (arr[y] === "%"){
+                        arr[y] = arr[closestNumberDown(arr, y)] % arr[closestNumberUp(arr, y)]
+                        delete(arr[closestNumberDown(arr, y)])
+                        delete(arr[closestNumberUp(arr, y)])
+                        }
+                    }
+        
+                    for (let b = 0; b < arr.length; b++){
+                    if (arr[b] === "+"){
+                            arr[b] = parseInt(arr[closestNumberDown(arr, b)]) + parseInt(arr[closestNumberUp(arr, b)])
+                            delete(arr[closestNumberDown(arr, b)])
+                            delete(arr[closestNumberUp(arr, b)])
+                        }
+                    else if (arr[b] === "-"){
+                            arr[b] = arr[closestNumberDown(arr, b)] - arr[closestNumberUp(arr, b)]
+                            delete(arr[closestNumberDown(arr, b)])
+                            delete(arr[closestNumberUp(arr, b)])
+                        }
             }
             }
     
@@ -222,6 +246,10 @@ function calculate (arr) {
             }
             
         }
+        if (isNaN(result)) {
+            result = "Error";
+        }
+        console.log(arr.join(""));
         return result;
     }
         
@@ -248,17 +276,19 @@ function closestNumberUp(array, index) {
 let operationDone = false;
 
 let allButtons = document.querySelectorAll("button");
-
 let equals = document.querySelector(".equals");
 
+
+
 allButtons.forEach(button => {
-    addEventListener("click", (button) => {
-        if (operationDone === true && button.target != equals) {
+    button.addEventListener("click", (event) => {
+        if (operationDone === true && event.target != equals) {
             operation.classList.toggle("operationDone");
             result.classList.toggle("resultDone");
             operationDone = false;  
         }
-    })});
+    });
+});
 
 
 
@@ -268,8 +298,14 @@ function enter() {
         
         operation.classList.toggle("operationDone");
         result.classList.toggle("resultDone");
-        operationDone = true;
+        operationDone = true
+        
     }
     currentCalculation.pop();
     
 }
+
+/*function scrollRight() {
+    operation.scrollLeft = operation.scrollWidth;
+    result.scrollLeft = result.scrollWidth;
+}*/
