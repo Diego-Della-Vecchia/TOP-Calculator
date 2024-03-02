@@ -1,28 +1,5 @@
 const operation = document.querySelector(".operation");
 const result = document.querySelector(".result");
-/*const clear = document.querySelector(".clear");
-const back = document.querySelector(".delete");
-const parenthesis = document.querySelector(".parenthesis");
-const percentage = document.querySelector(".percentage");
-const one = document.querySelector(".1");
-const two = document.querySelector(".2");
-const three = document.querySelector(".3");
-const division = document.querySelector(".division");
-const four = document.querySelector(".4");
-const five = document.querySelector(".5");
-const six = document.querySelector(".6");
-const multiplication = document.querySelector(".multiplication");
-const seven = document.querySelector(".7");
-const eight = document.querySelector(".8");
-const nine = document.querySelector(".9");
-const subtraction = document.querySelector(".minus");
-const decimals = document.querySelector(".decimals");
-const zero = document.querySelector(".0");
-const equals = document.querySelector(".equals");
-const addition = document.querySelector(".plus");
-
- all buttons and screens are refrenced above 
-*/
 
 let currentCalculation = [];
 
@@ -91,8 +68,7 @@ function updateArray(value) {
         currentCalculation[currentCalculation.length-1] === ")" ||
         currentCalculation[currentCalculation.length-1] === "%" ||
         currentCalculation[currentCalculation.length-1] === "/" ||
-        currentCalculation[currentCalculation.length-1] === "*" ||
-        currentCalculation[currentCalculation.length-1] ==="."){}
+        currentCalculation[currentCalculation.length-1] === "*"){}
     
         else {
             
@@ -118,9 +94,14 @@ function updateArray(value) {
 
 
 function updateValue(number) {
-    if (currentValue === null) currentValue = number;
+    if (currentValue === null && number === ".") {
+        currentValue = "";
+    }
+    else if (currentValue == "" && number === ".") {}
+    else if (currentValue === null || currentValue === "") currentValue = number;
     else {
-    currentValue += number;
+        if (currentValue.includes(".") && number === ".") {}
+    else currentValue += number;
     }
     operation.innerText = currentCalculation.join("") + currentValue;
     currentCalculation.push(currentValue);
@@ -154,14 +135,13 @@ function calculate (arr) {
     arr[arr.length-1] === ")" ||
     arr[arr.length-1] === "%" ||
     arr[arr.length-1] === "/" ||
-    arr[arr.length-1] === "*" ||
-    arr[arr.length-1] ==="."){
+    arr[arr.length-1] === "*"){
         
         arr.pop();
         
     }
 
-    let result = "hehe" ;
+    let result;
 
     for(let i = 0; i < arr.length; i++) {
         
@@ -175,62 +155,100 @@ function calculate (arr) {
             i++
             for (;i < j; i++){
                 if (arr[i] === "*"){
-                    arr[i] = arr[i-1] * arr[i+1]
-                    delete(arr[i-1])
-                    delete(arr[i+1])   
+                    arr[i] = arr[closestNumberDown(arr, i)] * arr[closestNumberUp(arr, i)]
+                    delete(arr[closestNumberDown(arr, i)])
+                    delete(arr[closestNumberUp(arr, i)])
                 }
                 else if (arr[i] === "/"){
-                    arr[i] = arr[i-1] / arr[i+1]
-                    delete(arr[i-1])
-                    delete(arr[i+1])   
+                    arr[i] = arr[closestNumberDown(arr, i)] / arr[closestNumberUp(arr, i)]
+                    delete(arr[closestNumberDown(arr, i)])
+                    delete(arr[closestNumberUp(arr, i)])
                 }
                 else if (arr[i] === "%"){
-                    arr[i] = arr[i-1] & arr[i+1]
-                    delete(arr[i-1])
-                    delete(arr[i+1])   
+                    arr[i] = arr[closestNumberDown(arr, i)] & arr[closestNumberUp(arr, i)]
+                    delete(arr[closestNumberDown(arr, i)])
+                    delete(arr[closestNumberUp(arr, i)])
                 }
                 else if (arr[i] === "+"){
-                    arr[i] == arr[i-1] + arr[i+1]
-                    delete arr[i-1]
-                    delete arr[i+1]
+                    arr[i] == arr[closestNumberDown(arr, i)] + arr[closestNumberUp(arr, i)]
+                    delete(arr[closestNumberDown(arr, i)])
+                    delete(arr[closestNumberUp(arr, i)])
                 }
                 else if (arr[i] === "-"){
-                    arr[i] == arr[i-1] + arr[i+1]
-                    delete arr[i-1]
-                    delete arr[i+1]
+                    arr[i] == arr[closestNumberDown(arr, i)] + arr[closestNumberUp(arr, i)]
+                    delete(arr[closestNumberDown(arr, i)])
+                    delete(arr[closestNumberUp(arr, i)])
                 }
             }
             }
     
         }
-        else if (arr[i] === "*"){
-            arr[i] = arr[i-1] * arr[i+1]
-            delete(arr[i-1])
-            delete(arr[i+1])   
+        }
+        for (let y = 0; y < arr.length; y++){
+          
+        if (arr[y] === "*"){
+            arr[y] = arr[closestNumberDown(arr, y)] * arr[closestNumberUp(arr, y)]
+            delete(arr[closestNumberDown(arr, y)])
+            delete(arr[closestNumberUp(arr, y)])
             }
-            else if (arr[i] === "/"){
-                arr[i] = arr[i-1] / arr[i+1]
-                delete(arr[i-1])
-                delete(arr[i+1])   
+            else if (arr[y] === "/"){
+                arr[y] = arr[closestNumberDown(arr, y)] / arr[closestNumberUp(arr, y)]
+                delete(arr[closestNumberDown(arr, y)])
+                delete(arr[closestNumberUp(arr, y)])
                 }
-            else if (arr[i] === "%"){
-                arr[i] = arr[i-1] & arr[i+1]
-                delete(arr[i-1])
-                delete(arr[i+1])   
+            else if (arr[y] === "%"){
+                arr[y] = arr[closestNumberDown(arr, y)] % arr[closestNumberUp(arr, y)]
+                delete(arr[closestNumberDown(arr, y)])
+                delete(arr[closestNumberUp(arr, y)])
                 }
-            else if (arr[i] === "+"){
-                    arr[i] == arr[i-1] + arr[i+1]
-                    delete arr[i-1]
-                    delete arr[i+1]
+            }
+
+            for (let b = 0; b < arr.length; b++){
+            if (arr[b] === "+"){
+                    arr[b] = parseInt(arr[closestNumberDown(arr, b)]) + parseInt(arr[closestNumberUp(arr, b)])
+                    delete(arr[closestNumberDown(arr, b)])
+                    delete(arr[closestNumberUp(arr, b)])
                 }
-            else if (arr[i] === "-"){
-                    arr[i] == arr[i-1] + arr[i+1]
-                    delete arr[i-1]
-                    delete arr[i+1]
+            else if (arr[b] === "-"){
+                    arr[b] = arr[closestNumberDown(arr, b)] - arr[closestNumberUp(arr, b)]
+                    delete(arr[closestNumberDown(arr, b)])
+                    delete(arr[closestNumberUp(arr, b)])
                 }
         }
-
+        
         console.log(arr)
-        return "result";
+        for (let a = 0; a < arr.length; a++){
+            if (arr[a] != undefined){
+               result = arr[a];
+            }
+            
+        }
+        return result;
     }
         
+function closestNumberDown(array, index){
+    index--;
+    for(; index >= 0; index--){
+        if (array[index] === undefined){
+
+        }
+        else return index
+    }
+}
+
+function closestNumberUp(array, index) {
+    index++;
+    for(; index <= array.length; index++){
+        if (array[index] === undefined){
+
+        }
+        else  return index;
+    }
+}
+
+
+function enter() {
+   operation.classList.toggle("operationDone");
+    result.classList.toggle("resultDone");
+  
+}

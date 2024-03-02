@@ -79,3 +79,22 @@ button:active {
     color: #3D005B;
 }
 
+.resultDone {
+    height: 80px;
+    font-size: 70px;
+    text-align: end;
+    padding-right: 15px;
+    overflow:hidden;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.operationDone {
+   
+    height: 50px;
+    font-size: 30px;
+    text-align: end;
+    padding-right: 15px;
+}
+
