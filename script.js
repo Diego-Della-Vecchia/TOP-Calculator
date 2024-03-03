@@ -169,11 +169,11 @@ function calculate (arr) {
     let result;
     let openingParenthesis;
     let closingParenthesis;
-    if (parenthesis){
+    if (parenthesisPresent){
     for(let i = 0; i < arr.length; i++) {
         
         if (arr[i] === "(") {
-            if (parenthesisClosed)
+            if (parenthesisClosed){
             for (let j = i; j < arr.length; j++){
                 if (arr[j] === ")") {                
                     closingParenthesis = j;
@@ -182,38 +182,40 @@ function calculate (arr) {
                 }
                 
             }
+        }
+        else closingParenthesis = arr.length;
+
+        console.log(closingParenthesis)
             openingParenthesis = i;
 
-            if (closingParenthesis) delete arr[openingParenthesis]
+            if (openingParenthesis) delete arr[openingParenthesis]
+            
+            if (closingParenthesis)delete arr[closingParenthesis]
             
 
-            delete arr[closingParenthesis]
-
             
 
-            if (!(arr[openingParenthesis-1] === "*" || arr[openingParenthesis-1] === "/" || arr[openingParenthesis-1] === "+" || arr[openingParenthesis-1] === "-" || arr[openingParenthesis-1] === "%")) {
-                arr[openingParenthesis] = "*"
-            }
+           
             i++
             for (;i < closingParenthesis; i++){
-                if (arr[y] === "*"){
-                    arr[y] = arr[closestNumberDown(arr, y)] * arr[closestNumberUp(arr, y)]
-                    delete(arr[closestNumberDown(arr, y)])
-                    delete(arr[closestNumberUp(arr, y)])
+                if (arr[i] === "*"){
+                    arr[i] = arr[closestNumberDown(arr, i)] * arr[closestNumberUp(arr, i)]
+                    delete(arr[closestNumberDown(arr, i)])
+                    delete(arr[closestNumberUp(arr, i)])
                     }
-                    else if (arr[y] === "/"){
-                        arr[y] = arr[closestNumberDown(arr, y)] / arr[closestNumberUp(arr, y)]
-                        delete(arr[closestNumberDown(arr, y)])
-                        delete(arr[closestNumberUp(arr, y)])
+                    else if (arr[i] === "/"){
+                        arr[i] = arr[closestNumberDown(arr, i)] / arr[closestNumberUp(arr, i)]
+                        delete(arr[closestNumberDown(arr, i)])
+                        delete(arr[closestNumberUp(arr, i)])
                         }
-                    else if (arr[y] === "%"){
-                        arr[y] = arr[closestNumberDown(arr, y)] % arr[closestNumberUp(arr, y)]
-                        delete(arr[closestNumberDown(arr, y)])
-                        delete(arr[closestNumberUp(arr, y)])
+                    else if (arr[i] === "%"){
+                        arr[i] = arr[closestNumberDown(arr, i)] /100 * arr[closestNumberUp(arr, i)]
+                        delete(arr[closestNumberDown(arr, i)])
+                        delete(arr[closestNumberUp(arr, i)])
                         }
                     }
         
-                    for (let b = openingParenthesis; b < closingParenthesis; b++){
+                    for (let b = openingParenthesis +1; b < closingParenthesis; b++){
                         if (arr[b] === "+"){
                             arr[b] = parseInt(arr[closestNumberDown(arr, b)]) + parseInt(arr[closestNumberUp(arr, b)])
                             delete(arr[closestNumberDown(arr, b)])
@@ -223,8 +225,15 @@ function calculate (arr) {
                             arr[b] = arr[closestNumberDown(arr, b)] - arr[closestNumberUp(arr, b)]
                             delete(arr[closestNumberDown(arr, b)])
                             delete(arr[closestNumberUp(arr, b)])
-                            console.log(arr);
+                         
                         }
+                    }
+                    if (!(arr[openingParenthesis-1] === "*" || arr[openingParenthesis-1] === "/" || arr[openingParenthesis-1] === "+" || arr[openingParenthesis-1] === "-" || arr[openingParenthesis-1] === "%")) {
+                        arr[openingParenthesis] = "*"
+                    }
+                    
+                    if (!(arr[closingParenthesis+1] === "*" || arr[closingParenthesis+1] === "/" || arr[closingParenthesis+1] === "+" || arr[closingParenthesis+1] === "-" || arr[closingParenthesis+1] === "%" || arr[closingParenthesis+1] === undefined)) {
+                        arr[closingParenthesis] = "*"
                     }
             
         }
@@ -403,3 +412,7 @@ addEventListener("keydown", (key) => {
     }
 
 });
+
+
+
+
