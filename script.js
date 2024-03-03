@@ -61,12 +61,11 @@ function updateArray(value) {
     
 
     if (currentCalculation.length === 0 && value != "()"){} 
-
+    else if (currentCalculation[currentCalculation.length-1] === "²" && value === "²"){}
     else if ( value != "()" &&(
         currentCalculation[currentCalculation.length-1] === "+" ||
         currentCalculation[currentCalculation.length-1] === "-" ||
         currentCalculation[currentCalculation.length-1] === "%" ||
-        currentCalculation[currentCalculation.length-1] === "²" ||
         currentCalculation[currentCalculation.length-1] === "(" ||
         currentCalculation[currentCalculation.length-1] === "/" ||
         currentCalculation[currentCalculation.length-1] === "*")){}
