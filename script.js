@@ -66,7 +66,7 @@ function updateArray(value) {
         currentCalculation[currentCalculation.length-1] === "+" ||
         currentCalculation[currentCalculation.length-1] === "-" ||
         currentCalculation[currentCalculation.length-1] === "%" ||
-       
+       currentCalculation[currentCalculation.length-1] === "(" ||
         currentCalculation[currentCalculation.length-1] === "/" ||
         currentCalculation[currentCalculation.length-1] === "*")){}
     
@@ -135,13 +135,14 @@ let parenthesisClosed = false;
 function calculate (arr) {
     
     if (arr.includes("(")) parenthesisPresent = true;
-
+    console.log
     if (arr.includes(")")) parenthesisClosed = true;
 
     arr = [...arr];
 
     if (arr.length == 0) return "";
     if (arr.length == 1) return arr[0];
+    if (arr.length == 2 && arr[0] == "(") return arr[1];
     if (
     arr[arr.length-1] === "+" ||
     arr[arr.length-1] === "-" ||
@@ -177,7 +178,7 @@ function calculate (arr) {
             for (let j = i; j < arr.length; j++){
                 if (arr[j] === ")") {                
                     closingParenthesis = j;
-                    console.log(closingParenthesis)
+                   
                     break;
                 }
                 
@@ -185,14 +186,13 @@ function calculate (arr) {
         }
         else closingParenthesis = arr.length;
 
-        console.log(closingParenthesis)
             openingParenthesis = i;
 
-            if (openingParenthesis) delete arr[openingParenthesis]
+            if (parenthesisPresent) delete arr[openingParenthesis]
             
-            if (closingParenthesis)delete arr[closingParenthesis]
+            if (parenthesisClosed)delete arr[closingParenthesis]
             
-
+            console.log(arr)
             
 
            
@@ -225,17 +225,18 @@ function calculate (arr) {
                             arr[b] = arr[closestNumberDown(arr, b)] - arr[closestNumberUp(arr, b)]
                             delete(arr[closestNumberDown(arr, b)])
                             delete(arr[closestNumberUp(arr, b)])
-                         
+                            
                         }
                     }
-                    if (!(arr[openingParenthesis-1] === "*" || arr[openingParenthesis-1] === "/" || arr[openingParenthesis-1] === "+" || arr[openingParenthesis-1] === "-" || arr[openingParenthesis-1] === "%")) {
+
+                    if (openingParenthesis!=0 && !(arr[openingParenthesis-1] === "*" || arr[openingParenthesis-1] === "/" || arr[openingParenthesis-1] === "+" || arr[openingParenthesis-1] === "-" || arr[openingParenthesis-1] === "%")) {
                         arr[openingParenthesis] = "*"
                     }
                     
                     if (!(arr[closingParenthesis+1] === "*" || arr[closingParenthesis+1] === "/" || arr[closingParenthesis+1] === "+" || arr[closingParenthesis+1] === "-" || arr[closingParenthesis+1] === "%" || arr[closingParenthesis+1] === undefined)) {
                         arr[closingParenthesis] = "*"
                     }
-            
+                    
         }
         }
         }
@@ -280,7 +281,7 @@ function calculate (arr) {
         if (isNaN(result)) {
             result = "Error";
         }
-        console.log(arr);
+        console.log(arr)
         return result;
     }
         
