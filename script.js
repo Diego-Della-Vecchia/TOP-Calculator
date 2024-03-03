@@ -70,7 +70,7 @@ function updateArray(value) {
         currentCalculation[currentCalculation.length-1] === "/" ||
         currentCalculation[currentCalculation.length-1] === "*")){}
     
-    else if (value === "()" && currentCalculation[currentCalculation.length-1] === "(" || currentCalculation[currentCalculation.length-1] === ")"){} 
+    else if (value === "()" && (currentCalculation[currentCalculation.length-1] === "(" || currentCalculation[currentCalculation.length-1] === ")")){} 
         else {
             
             if (value === "delete") {
@@ -91,7 +91,7 @@ function updateArray(value) {
             }
         }
         updateScreen(currentCalculation.join(""));
-        
+        scrollRight()
     } 
 
 
@@ -109,7 +109,7 @@ function updateValue(number) {
     currentCalculation.push(currentValue);
     updateScreen(currentCalculation.join(""));
     currentCalculation.pop();
-
+    scrollRight()
     
     }
 
@@ -128,10 +128,16 @@ function clearScreen() {
     updateScreen("");
 }
 
+let parenthesisPresent = null;
 
+let parenthesisClosed = false;
 
 function calculate (arr) {
-   
+    
+    if (arr.includes("(")) parenthesisPresent = true;
+
+    if (arr.includes(")")) parenthesisClosed = true;
+
     arr = [...arr];
 
     if (arr.length == 0) return "";
@@ -140,7 +146,6 @@ function calculate (arr) {
     arr[arr.length-1] === "+" ||
     arr[arr.length-1] === "-" ||
     arr[arr.length-1] === "(" ||
-    arr[arr.length-1] === ")" ||
     arr[arr.length-1] === "%" ||
     arr[arr.length-1] === "/" ||
     arr[arr.length-1] === "*"){
@@ -148,12 +153,11 @@ function calculate (arr) {
         arr.pop();
         
     }
-
+    
     if (
         arr[arr.length-1] === "+" ||
         arr[arr.length-1] === "-" ||
         arr[arr.length-1] === "(" ||
-        arr[arr.length-1] === ")" ||
         arr[arr.length-1] === "%" ||
         arr[arr.length-1] === "/" ||
         arr[arr.length-1] === "*"){
@@ -163,18 +167,35 @@ function calculate (arr) {
         }
 
     let result;
-
+    let openingParenthesis;
+    let closingParenthesis;
+    if (parenthesis){
     for(let i = 0; i < arr.length; i++) {
         
         if (arr[i] === "(") {
+            if (parenthesisClosed)
             for (let j = i; j < arr.length; j++){
-                if (arr[j] === ")") {
-                break;  
+                if (arr[j] === ")") {                
+                    closingParenthesis = j;
+                    console.log(closingParenthesis)
+                    break;
                 }
-            delete arr[i]
-            delete arr[j]
+                
+            }
+            openingParenthesis = i;
+
+            if (closingParenthesis) delete arr[openingParenthesis]
+            
+
+            delete arr[closingParenthesis]
+
+            
+
+            if (!(arr[openingParenthesis-1] === "*" || arr[openingParenthesis-1] === "/" || arr[openingParenthesis-1] === "+" || arr[openingParenthesis-1] === "-" || arr[openingParenthesis-1] === "%")) {
+                arr[openingParenthesis] = "*"
+            }
             i++
-            for (;i < j; i++){
+            for (;i < closingParenthesis; i++){
                 if (arr[y] === "*"){
                     arr[y] = arr[closestNumberDown(arr, y)] * arr[closestNumberUp(arr, y)]
                     delete(arr[closestNumberDown(arr, y)])
@@ -192,20 +213,21 @@ function calculate (arr) {
                         }
                     }
         
-                    for (let b = 0; b < arr.length; b++){
-                    if (arr[b] === "+"){
+                    for (let b = openingParenthesis; b < closingParenthesis; b++){
+                        if (arr[b] === "+"){
                             arr[b] = parseInt(arr[closestNumberDown(arr, b)]) + parseInt(arr[closestNumberUp(arr, b)])
                             delete(arr[closestNumberDown(arr, b)])
                             delete(arr[closestNumberUp(arr, b)])
                         }
-                    else if (arr[b] === "-"){
+                        else if (arr[b] === "-"){
                             arr[b] = arr[closestNumberDown(arr, b)] - arr[closestNumberUp(arr, b)]
                             delete(arr[closestNumberDown(arr, b)])
                             delete(arr[closestNumberUp(arr, b)])
+                            console.log(arr);
                         }
-            }
-            }
-    
+                    }
+            
+        }
         }
         }
         for (let y = 0; y < arr.length; y++){
@@ -221,7 +243,7 @@ function calculate (arr) {
                 delete(arr[closestNumberUp(arr, y)])
                 }
             else if (arr[y] === "%"){
-                arr[y] = arr[closestNumberDown(arr, y)] % arr[closestNumberUp(arr, y)]
+                arr[y] = arr[closestNumberDown(arr, y)] /100 * arr[closestNumberUp(arr, y)]
                 delete(arr[closestNumberDown(arr, y)])
                 delete(arr[closestNumberUp(arr, y)])
                 }
@@ -249,7 +271,7 @@ function calculate (arr) {
         if (isNaN(result)) {
             result = "Error";
         }
-        console.log(arr.join(""));
+        console.log(arr);
         return result;
     }
         
@@ -285,6 +307,7 @@ allButtons.forEach(button => {
         if (operationDone === true && event.target != equals) {
             operation.classList.toggle("operationDone");
             result.classList.toggle("resultDone");
+            scrollRight()
             operationDone = false;  
         }
     });
@@ -299,13 +322,84 @@ function enter() {
         operation.classList.toggle("operationDone");
         result.classList.toggle("resultDone");
         operationDone = true
-        
+        scrollRight()
     }
     currentCalculation.pop();
     
 }
 
-/*function scrollRight() {
+function scrollRight() {
     operation.scrollLeft = operation.scrollWidth;
-    result.scrollLeft = result.scrollWidth;
-}*/
+    
+}
+
+
+addEventListener("keydown", (key) => {
+    if (key.key === "Enter") {
+        enter();
+    }
+    if (key.key === "Backspace") {
+        updateArray("delete");
+    }
+    if (key.key === "Escape") {
+        clearScreen();
+    }
+    if (key.key === "1") {
+        updateValue("1");
+    }
+    if (key.key === "2") {
+        updateValue("2");
+    }
+    if (key.key === "3") {
+        updateValue("3");
+    }
+    if (key.key === "4") {
+        updateValue("4");
+    }
+    if (key.key === "5") {
+        updateValue("5");
+    }
+    if (key.key === "6") {
+        updateValue("6");
+    }
+    if (key.key === "7") {
+        updateValue("7");
+    }
+    if (key.key === "8") {
+        updateValue("8");
+    }
+    if (key.key === "9") {
+        updateValue("9");
+    }
+    if (key.key === "0") {
+        updateValue("0");
+    }
+    if (key.key === ".") {
+        updateValue(".");
+    }
+    if (key.key === "+") {
+        updateArray("+");
+    }
+    if (key.key === "-") {
+        updateArray("-");
+    }
+    if (key.key === "*") {
+        updateArray("*");
+    }
+    if (key.key === "/") {
+        updateArray("/");
+    }
+    if (key.key === "%") {
+        updateArray("%");
+    }
+    if (key.key === "(") {
+        updateArray("()");
+    }
+    if (key.key === ")") {
+        updateArray("()");
+    }
+    if (key.key === "=") {
+        enter();
+    }
+
+});
