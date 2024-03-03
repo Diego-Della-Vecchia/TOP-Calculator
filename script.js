@@ -66,7 +66,8 @@ function updateArray(value) {
         currentCalculation[currentCalculation.length-1] === "+" ||
         currentCalculation[currentCalculation.length-1] === "-" ||
         currentCalculation[currentCalculation.length-1] === "%" ||
-       currentCalculation[currentCalculation.length-1] === "(" ||
+        currentCalculation[currentCalculation.length-1] === "²" ||
+        currentCalculation[currentCalculation.length-1] === "(" ||
         currentCalculation[currentCalculation.length-1] === "/" ||
         currentCalculation[currentCalculation.length-1] === "*")){}
     
@@ -213,6 +214,10 @@ function calculate (arr) {
                         delete(arr[closestNumberDown(arr, i)])
                         delete(arr[closestNumberUp(arr, i)])
                         }
+                    else if (arr[i] === "²"){
+                        arr[i] = arr[closestNumberDown(arr, i)] * arr[closestNumberDown(arr, i)]
+                        delete(arr[closestNumberDown(arr, i)])
+                    }
                     }
         
                     for (let b = openingParenthesis +1; b < closingParenthesis; b++){
@@ -256,6 +261,10 @@ function calculate (arr) {
                 arr[y] = arr[closestNumberDown(arr, y)] /100 * arr[closestNumberUp(arr, y)]
                 delete(arr[closestNumberDown(arr, y)])
                 delete(arr[closestNumberUp(arr, y)])
+                }
+                else if (arr[y] === "²"){
+                    arr[y] = arr[closestNumberDown(arr, y)] * arr[closestNumberDown(arr, y)]
+                    delete(arr[closestNumberDown(arr, y)])
                 }
             }
 

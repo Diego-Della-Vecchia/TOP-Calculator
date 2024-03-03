@@ -127,7 +127,6 @@ button:active {
 .clear, .delete {
     background-color: #001d64;
     color: #E1E0E0;
- 
 }
 
 .clear:hover, .delete:hover {
@@ -136,3 +135,7 @@ button:active {
 
 }
 
+
+.clear, .delete, .parenthesis, .percentage, .exponent2 {
+    width: 72px;
+}
