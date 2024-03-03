@@ -72,6 +72,7 @@ button:active {
     padding-right: 15px;
     padding-left: 15px;
 
+
 }
 
 .result {
@@ -106,6 +107,7 @@ button:active {
     overflow:auto;
     overflow-y: hidden;
     text-align: end;
+    white-space: nowrap;
 
 }
 
@@ -131,5 +133,6 @@ button:active {
 .clear:hover, .delete:hover {
     background-color: #E1E0E0;
     color: #001d64;
+
 }
 
