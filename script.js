@@ -152,7 +152,10 @@ function updateValue(number) {
     }
 
 
-
+/* this function iterates through the currentCalculation array and searches for operators in PEMDAS order,
+ if it finds one, it finds the numpers closest to it and performs the operation, then deletes the numbers 
+ and the operator and replaces the operator with the result of the operation. It then repeats the process 
+ until there are no more operators in the array. It then returns the result of the calculation.*/
 
 function updateScreen(value) {
     operation.innerText = value;
@@ -469,15 +472,17 @@ allButtons.forEach(button => {
 
 
 function enter() {
-    currentCalculation.push(currentValue)
-    if( operationDone === false && currentCalculation.length  >= 3 && currentValue != null && currentValue != "" ){
+    if (currentValue !== null && currentValue !== "") { currentCalculation.push(currentValue)}
+   
+    
+    if( operationDone === false && currentCalculation.length  >= 3 ){
         
         operation.classList.toggle("operationDone");
         result.classList.toggle("resultDone");
         operationDone = true
         scrollRight()
     }
-    currentCalculation.pop();
+    
     
 }
 
