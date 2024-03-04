@@ -160,6 +160,7 @@ function updateValue(number) {
 function updateScreen(value) {
     operation.innerText = value;
     result.innerText = calculate(currentCalculation);
+    console.log("update")
 
 }
 function clearScreen() {
@@ -595,6 +596,8 @@ roundTo.min = 0;
 
 let roundValue = 0;
 
+let secondaryCounter = 0;
+
 round.addEventListener("click", () => {
     if (counter == 1 && userTyping === false){
         round.removeChild(roundTo)
@@ -602,6 +605,10 @@ round.addEventListener("click", () => {
         counter = 0;
         round.style.fopntSize = "22px";
         roundValue = 0;
+        secondaryCounter = 0;
+        currentCalculation.push(currentValue);
+    updateScreen(currentCalculation.join(""));
+    currentCalculation.pop();
     }
     else{
     round.innerText = "Round to x decimals";
@@ -609,13 +616,24 @@ round.addEventListener("click", () => {
     counter = 1;
     round.style.fontSize = "15px";
     }
+    if (secondaryCounter == 0 && counter ==1) {
+        roundValue = null;
+        secondaryCounter
+        currentCalculation.push(currentValue);
+    updateScreen(currentCalculation.join(""));
+    currentCalculation.pop();
+    }
+   
 });
 
 roundTo.addEventListener("change", () => {
     roundValue = roundTo.value;
+    secondaryCounter = 1;
     if (roundValue == 0) {
         roundValue = null;
     }
     else roundValue = Math.pow(10, roundValue);
-
+    currentCalculation.push(currentValue);
+    updateScreen(currentCalculation.join(""));
+    currentCalculation.pop();
 });
