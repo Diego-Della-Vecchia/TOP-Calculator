@@ -10,6 +10,8 @@ let parenthesis = false;
 
 let temporary;
 
+let squareRoot = false;
+
 let temporaryArray;
 
 function updateArray(value) {
@@ -29,7 +31,6 @@ function updateArray(value) {
     if (value === "delete") {
 
         temporary = currentCalculation[currentCalculation.length - 1];
-
         if (temporary === ")") {
             currentCalculation.pop();
             parenthesis = true;
@@ -44,6 +45,7 @@ function updateArray(value) {
 
             temporaryArray = temporary.split("");
 
+            if (temporaryArray.includes("√")) temporaryArray.pop();
             temporaryArray.pop();
 
             if (temporaryArray.length === 0) {
@@ -60,9 +62,9 @@ function updateArray(value) {
 
     
 
-    if (currentCalculation.length === 0 && value != "()"){} 
-    else if (currentCalculation[currentCalculation.length-1] === "²" && value === "²"){}
-    else if ( value != "()" &&(
+    if (currentCalculation.length === 0 && (value != "()" && value != "√")){} 
+    else if (currentCalculation[currentCalculation.length-1] === "²" && (value === "²")){}
+    else if ( (value != "()" && value !="√") &&(
         currentCalculation[currentCalculation.length-1] === "+" ||
         currentCalculation[currentCalculation.length-1] === "-" ||
         currentCalculation[currentCalculation.length-1] === "%" ||
@@ -71,24 +73,58 @@ function updateArray(value) {
         currentCalculation[currentCalculation.length-1] === "*")){}
     
     else if (value === "()" && (currentCalculation[currentCalculation.length-1] === "(" || currentCalculation[currentCalculation.length-1] === ")")){} 
+    else if ((value === "√" || value=="()")&& (currentCalculation[currentCalculation.length-1] === "√(" || currentCalculation[currentCalculation.length-1] === ")")){}
         else {
             
             if (value === "delete") {
             }
 
-            else {
-                if (value === "()") {
+            else if (value == "()"){
                     if (parenthesis === false) {
                         value = "(";
                         parenthesis = true;
+                        squareRoot = true;
                     }       
                  else {
-                value = ")";
+                value = ")";        
                     parenthesis = false;
+                    squareRoot = false;
                 }
-                }
-            currentCalculation.push(value);
+            
+                if (
+                    currentCalculation[currentCalculation.length-1] === "+" ||
+                    currentCalculation[currentCalculation.length-1] === "-" ||
+                    currentCalculation[currentCalculation.length-1] === "%" ||
+                    currentCalculation[currentCalculation.length-1] === "/" ||
+                    currentCalculation[currentCalculation.length-1] === "*"){ currentCalculation.pop();}
+                    currentCalculation.push(value);
             }
+            else if (value === "√"){
+                if (squareRoot === false) {
+                    squareRoot = true;
+                    parenthesis = true;
+                    currentCalculation.push(value +"(");
+                }
+                else if (squareRoot === true && parenthesis && true && currentCalculation[currentCalculation.length-1] === "(") {
+
+                }
+                else if (squareRoot === true) {
+                    value = ")";
+                    parenthesis = false;
+                    squareRoot = false;
+                    if (
+                    currentCalculation[currentCalculation.length-1] === "+" ||
+                    currentCalculation[currentCalculation.length-1] === "-" ||
+                    currentCalculation[currentCalculation.length-1] === "%" ||
+                    currentCalculation[currentCalculation.length-1] === "/" ||
+                    currentCalculation[currentCalculation.length-1] === "*"){currentCalculation.pop();}
+                    else currentCalculation.push(value);
+                }
+                
+                
+                
+            }
+            else currentCalculation.push(value);
         }
         updateScreen(currentCalculation.join(""));
         scrollRight()
@@ -100,6 +136,8 @@ function updateValue(number) {
     if (currentValue === null && number === ".") {
         currentValue = "";
     }
+    else if (currentCalculation[currentCalculation.length-1] === "²"){}
+    else if (currentValue !== null && number === "-") {}
     else if (currentValue == "" && number === ".") {}
     else if (currentValue === null || currentValue === "") currentValue = number;
     else {
@@ -125,18 +163,30 @@ function clearScreen() {
     currentCalculation = [];
     currentValue = null;
     parenthesis = false;
+    squareRoot = false;
     updateScreen("");
 }
 
-let parenthesisPresent = null;
+let parenthesisPresent = false;
 
 let parenthesisClosed = false;
 
+let squareRootPresent = false;
+
+let openingParenthesis;
+
+let closingParenthesis;
+
+let openingSquareRoot;
+
 function calculate (arr) {
-    
+
+    let result;
+
     if (arr.includes("(")) parenthesisPresent = true;
-    console.log
+
     if (arr.includes(")")) parenthesisClosed = true;
+    if (arr.includes("√(")) squareRootPresent = true;
 
     arr = [...arr];
 
@@ -147,6 +197,7 @@ function calculate (arr) {
     arr[arr.length-1] === "+" ||
     arr[arr.length-1] === "-" ||
     arr[arr.length-1] === "(" ||
+    arr[arr.length-1] === "√(" ||
     arr[arr.length-1] === "%" ||
     arr[arr.length-1] === "/" ||
     arr[arr.length-1] === "*"){
@@ -159,6 +210,7 @@ function calculate (arr) {
         arr[arr.length-1] === "+" ||
         arr[arr.length-1] === "-" ||
         arr[arr.length-1] === "(" ||
+        arr[arr.length-1] === "√(" ||
         arr[arr.length-1] === "%" ||
         arr[arr.length-1] === "/" ||
         arr[arr.length-1] === "*"){
@@ -167,10 +219,8 @@ function calculate (arr) {
             
         }
 
-    let result;
-    let openingParenthesis;
-    let closingParenthesis;
-    if (parenthesisPresent){
+   
+    if (parenthesisPresent || squareRootPresent) {
     for(let i = 0; i < arr.length; i++) {
         
         if (arr[i] === "(") {
@@ -191,8 +241,7 @@ function calculate (arr) {
             if (parenthesisPresent) delete arr[openingParenthesis]
             
             if (parenthesisClosed)delete arr[closingParenthesis]
-            
-            console.log(arr)
+
             
 
            
@@ -242,8 +291,92 @@ function calculate (arr) {
                     }
                     
         }
+        if(squareRootPresent){
+
+            if (arr[i] === "√(") {
+                if (parenthesisClosed){
+                for (let j = i; j < arr.length; j++){
+                    if (arr[j] === ")") {                
+                        closingParenthesis = j;
+                       
+                        break;
+                    }
+                    
+                }
+            }
+            else closingParenthesis = arr.length;
+            
+                openingSquareRoot = i;
+            
+                if (squareRootPresent) delete arr[openingSquareRoot]
+                
+                if (parenthesisClosed)delete arr[closingParenthesis]
+                
+               
+                
+            
+               
+                i++
+                for (;i < closingParenthesis; i++){
+                    if (arr[i] === "*"){
+                        arr[i] = arr[closestNumberDown(arr, i)] * arr[closestNumberUp(arr, i)]
+                        delete(arr[closestNumberDown(arr, i)])
+                        delete(arr[closestNumberUp(arr, i)])
+                        }
+                        else if (arr[i] === "/"){
+                            arr[i] = arr[closestNumberDown(arr, i)] / arr[closestNumberUp(arr, i)]
+                            delete(arr[closestNumberDown(arr, i)])
+                            delete(arr[closestNumberUp(arr, i)])
+                            }
+                        else if (arr[i] === "%"){
+                            arr[i] = arr[closestNumberDown(arr, i)] /100 * arr[closestNumberUp(arr, i)]
+                            delete(arr[closestNumberDown(arr, i)])
+                            delete(arr[closestNumberUp(arr, i)])
+                            }
+                        else if (arr[i] === "²"){
+                            arr[i] = arr[closestNumberDown(arr, i)] * arr[closestNumberDown(arr, i)]
+                            delete(arr[closestNumberDown(arr, i)])
+                        }
+                        }
+            
+                        for (let b = openingSquareRoot +1; b < closingParenthesis; b++){
+                            if (arr[b] === "+"){
+                                arr[b] = parseInt(arr[closestNumberDown(arr, b)]) + parseInt(arr[closestNumberUp(arr, b)])
+                                delete(arr[closestNumberDown(arr, b)])
+                                delete(arr[closestNumberUp(arr, b)])
+                            }
+                            else if (arr[b] === "-"){
+                                arr[b] = arr[closestNumberDown(arr, b)] - arr[closestNumberUp(arr, b)]
+                                delete(arr[closestNumberDown(arr, b)])
+                                delete(arr[closestNumberUp(arr, b)])
+                                
+                            }
+                        }
+
+                        for (let i = openingSquareRoot; i < closingParenthesis; i++){
+                            if (arr[i] === undefined){}
+                            else arr[i] = Math.sqrt(arr[i])
+                        }
+            
+                        if (openingSquareRoot!=0 && !(arr[openingSquareRoot-1] === "*" || arr[openingSquareRoot-1] === "/" || arr[openingSquareRoot-1] === "+" || arr[openingSquareRoot-1] === "-" || arr[openingSquareRoot-1] === "%")) {
+                            arr[openingSquareRoot] = "*"
+                        }
+                        
+                        if (!(arr[closingParenthesis+1] === "*" || arr[closingParenthesis+1] === "/" || arr[closingParenthesis+1] === "+" || arr[closingParenthesis+1] === "-" || arr[closingParenthesis+1] === "%" || arr[closingParenthesis+1] === undefined)) {
+                            arr[closingParenthesis] = "*"
+                        }
+                        
+            }
+            }
+            
         }
         }
+
+
+        
+
+
+
         for (let y = 0; y < arr.length; y++){
           
         if (arr[y] === "*"){
@@ -289,7 +422,9 @@ function calculate (arr) {
         if (isNaN(result)) {
             result = "Error";
         }
-        console.log(arr)
+    parenthesisPresent = false;
+
+    parenthesisClosed = false;
         return result;
     }
         
