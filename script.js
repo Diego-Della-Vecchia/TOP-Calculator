@@ -428,6 +428,13 @@ function calculate (arr) {
     parenthesisPresent = false;
 
     parenthesisClosed = false;
+
+    if (roundValue == null) {
+        result = Math.round(result);
+    }
+    else {
+        result = Math.round(result * roundValue) / roundValue;
+    }
         return result;
     }
         
@@ -493,6 +500,7 @@ function scrollRight() {
 
 
 addEventListener("keydown", (key) => {
+    if (userTyping == false) {
     if (key.key === "Enter") {
         enter();
     }
@@ -559,9 +567,53 @@ addEventListener("keydown", (key) => {
     if (key.key === "=") {
         enter();
     }
-
+    }
 });
 
+let round = document.querySelector(".round");
 
+let roundTo = document.createElement("input")
 
+let counter = 0;
 
+let userTyping = false;
+
+roundTo.addEventListener("focus", () => {
+    userTyping = true;
+});
+
+roundTo.addEventListener("blur", () => {
+    userTyping = false;
+});
+
+roundTo.setAttribute("type", "number");
+
+roundTo.defaultValue = 0;
+
+roundTo.min = 0;
+
+let roundValue = null;
+
+round.addEventListener("click", () => {
+    if (counter == 1 && userTyping === false){
+        round.removeChild(roundTo)
+        round.innerText = "Dont round";
+        counter = 0;
+        round.style.fopntSize = "22px";
+        roundValue = 0;
+    }
+    else{
+    round.innerText = "Round to x decimals";
+    round.appendChild(roundTo);
+    counter = 1;
+    round.style.fontSize = "15px";
+    roundValue = null;
+    }
+});
+
+roundTo.addEventListener("change", () => {
+    roundValue = roundTo.value;
+    if (roundValue == 0) {roundValue = null}
+    else roundValue = Math.pow(10, roundValue);
+
+});
