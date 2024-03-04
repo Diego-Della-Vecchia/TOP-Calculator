@@ -432,6 +432,7 @@ function calculate (arr) {
     if (roundValue == null) {
         result = Math.round(result);
     }
+    else if (roundValue == 0) {}
     else {
         result = Math.round(result * roundValue) / roundValue;
     }
@@ -592,7 +593,7 @@ roundTo.defaultValue = 0;
 
 roundTo.min = 0;
 
-let roundValue = null;
+let roundValue = 0;
 
 round.addEventListener("click", () => {
     if (counter == 1 && userTyping === false){
@@ -607,13 +608,14 @@ round.addEventListener("click", () => {
     round.appendChild(roundTo);
     counter = 1;
     round.style.fontSize = "15px";
-    roundValue = null;
     }
 });
 
 roundTo.addEventListener("change", () => {
     roundValue = roundTo.value;
-    if (roundValue == 0) {roundValue = null}
+    if (roundValue == 0) {
+        roundValue = null;
+    }
     else roundValue = Math.pow(10, roundValue);
 
 });
