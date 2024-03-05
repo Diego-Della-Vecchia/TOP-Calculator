@@ -40,6 +40,9 @@ function updateArray(value) {
             currentCalculation.pop();
             parenthesis = false;
         }
+        else if (temporary === undefined){
+            return;
+        }
         else {
             currentCalculation.pop();
 
@@ -502,7 +505,7 @@ function scrollRight() {
 
 
 addEventListener("keydown", (key) => {
-    if (userTyping == false) {
+    if (!userTyping){
     if (key.key === "Enter") {
         enter();
     }
@@ -569,26 +572,22 @@ addEventListener("keydown", (key) => {
     if (key.key === "=") {
         enter();
     }
+    if (key.key === "r") {
+        updateArray("√");
+    
+    }
     }
 });
 
-let round = document.querySelector(".round");
+let round = document.querySelector(".wrapper");
+
+let roundButton = document.querySelector(".round");
 
 let roundTo = document.createElement("input")
 
-let counter = 0;
-
-let userTyping = false;
-
-roundTo.addEventListener("focus", () => {
-    userTyping = true;
-});
-
-roundTo.addEventListener("blur", () => {
-    userTyping = false;
-});
-
 roundTo.setAttribute("type", "number");
+
+let counter = 0;
 
 roundTo.defaultValue = 0;
 
@@ -596,29 +595,29 @@ roundTo.min = 0;
 
 let roundValue = 0;
 
-let secondaryCounter = 0;
+let userTyping = false ;
 
-round.addEventListener("click", () => {
-    if (counter == 1 && userTyping === false){
+
+roundButton.addEventListener("click", () => {
+    if (counter == 1){
         round.removeChild(roundTo)
-        round.innerText = "Dont round";
+        roundButton.innerText = "Dont round";
         counter = 0;
-        round.style.fopntSize = "22px";
+        roundButton.style.fontSize = "22px";
         roundValue = 0;
-        secondaryCounter = 0;
         currentCalculation.push(currentValue);
     updateScreen(currentCalculation.join(""));
     currentCalculation.pop();
     }
     else{
-    round.innerText = "Round to x decimals";
+    roundButton.innerText = "Round to x decimals";
     round.appendChild(roundTo);
     counter = 1;
-    round.style.fontSize = "15px";
+    roundButton.style.fontSize = "15px";
+    roundTo.value = 0;
     }
-    if (secondaryCounter == 0 && counter ==1) {
+    if (counter == 1) {
         roundValue = null;
-        secondaryCounter
         currentCalculation.push(currentValue);
     updateScreen(currentCalculation.join(""));
     currentCalculation.pop();
@@ -628,7 +627,6 @@ round.addEventListener("click", () => {
 
 roundTo.addEventListener("change", () => {
     roundValue = roundTo.value;
-    secondaryCounter = 1;
     if (roundValue == 0) {
         roundValue = null;
     }
@@ -637,3 +635,8 @@ roundTo.addEventListener("change", () => {
     updateScreen(currentCalculation.join(""));
     currentCalculation.pop();
 });
+
+
+roundTo.addEventListener("focus", () => userTyping = true);
+
+roundTo.addEventListener("blur", () => userTyping = false);
