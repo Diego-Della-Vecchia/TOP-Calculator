@@ -605,9 +605,12 @@ roundButton.addEventListener("click", () => {
         counter = 0;
         roundButton.style.fontSize = "22px";
         roundValue = 0;
-        currentCalculation.push(currentValue);
-    updateScreen(currentCalculation.join(""));
-    currentCalculation.pop();
+        if (currentValue === null) {}
+        else currentCalculation.push(currentValue);
+        updateScreen(currentCalculation.join(""));
+        console.log(currentCalculation)
+        if (currentValue === null) {}
+        else currentCalculation.pop();
     }
     else{
     roundButton.innerText = "Round to x decimals";
@@ -615,13 +618,15 @@ roundButton.addEventListener("click", () => {
     counter = 1;
     roundButton.style.fontSize = "15px";
     roundTo.value = 0;
-    }
-    if (counter == 1) {
-        roundValue = null;
-        currentCalculation.push(currentValue);
+    roundValue = null;
+    if (currentValue === null) {}
+    else currentCalculation.push(currentValue);
     updateScreen(currentCalculation.join(""));
-    currentCalculation.pop();
+    console.log(currentCalculation)
+    if (currentValue === null) {}
+    else currentCalculation.pop();
     }
+
    
 });
 
@@ -631,9 +636,12 @@ roundTo.addEventListener("change", () => {
         roundValue = null;
     }
     else roundValue = Math.pow(10, roundValue);
-    currentCalculation.push(currentValue);
+    if (currentValue === null) {}
+    else currentCalculation.push(currentValue);
     updateScreen(currentCalculation.join(""));
-    currentCalculation.pop();
+    console.log(currentCalculation)
+    if (currentValue === null) {}
+    else currentCalculation.pop();
 });
 
 
