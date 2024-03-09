@@ -163,7 +163,6 @@ function updateValue(number) {
 function updateScreen(value) {
     operation.innerText = value;
     result.innerText = calculate(currentCalculation);
-    console.log("update")
 
 }
 function clearScreen() {
@@ -608,7 +607,6 @@ roundButton.addEventListener("click", () => {
         if (currentValue === null) {}
         else currentCalculation.push(currentValue);
         updateScreen(currentCalculation.join(""));
-        console.log(currentCalculation)
         if (currentValue === null) {}
         else currentCalculation.pop();
     }
@@ -622,7 +620,6 @@ roundButton.addEventListener("click", () => {
     if (currentValue === null) {}
     else currentCalculation.push(currentValue);
     updateScreen(currentCalculation.join(""));
-    console.log(currentCalculation)
     if (currentValue === null) {}
     else currentCalculation.pop();
     }
@@ -639,7 +636,6 @@ roundTo.addEventListener("change", () => {
     if (currentValue === null) {}
     else currentCalculation.push(currentValue);
     updateScreen(currentCalculation.join(""));
-    console.log(currentCalculation)
     if (currentValue === null) {}
     else currentCalculation.pop();
 });

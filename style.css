@@ -190,3 +190,7 @@ input{
 
 }
 
+::selection{
+    background-color: #001d64;
+    color: #E1E0E0;
+}
