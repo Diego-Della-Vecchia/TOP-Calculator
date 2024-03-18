@@ -602,7 +602,7 @@ roundButton.addEventListener("click", () => {
         round.removeChild(roundTo)
         roundButton.innerText = "Dont round";
         counter = 0;
-        roundButton.style.fontSize = "22px";
+        roundButton.style.fontSize = "min(25px, 5vw)";
         roundValue = 0;
         if (currentValue === null) {}
         else currentCalculation.push(currentValue);
@@ -614,7 +614,7 @@ roundButton.addEventListener("click", () => {
     roundButton.innerText = "Round to x decimals";
     round.appendChild(roundTo);
     counter = 1;
-    roundButton.style.fontSize = "15px";
+    roundButton.style.fontSize = "min(15px, 3vw)";
     roundTo.value = 0;
     roundValue = null;
     if (currentValue === null) {}

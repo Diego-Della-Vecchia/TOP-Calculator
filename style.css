@@ -144,8 +144,7 @@ button:active {
 
 
 .round {
-    /* font-size: 22px;
-    width: 100px; */
+    font-size: min(25px, 5vw);
     border-radius: 50px;
     border: 2px solid #001d64;
     color:#001d64;
@@ -155,6 +154,7 @@ button:active {
     align-items: center;
     justify-content: center;
     background-color: white;
+    flex:2
 }
 
 .round:hover {
@@ -169,24 +169,22 @@ button:active {
 }
 
 input{
-    /* width: 50px;
-    height: 25px; */
+    width: min(50px, 9vw);
+    flex: 1;
     border-radius: 50px;
     border: solid 2px #001d64
 }
 
-.typing {
-    /* font-size: 15px; */
-}
+
 
 .wrapper {
-    /* width: 100px;
-    height: 100px; */
+    width: min(100px, 18vw);
+    height: min(100px, 18vw);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap:10px;
+    gap: min(10px, 0.5vw);
     margin: 0px;
     padding:0px
 
