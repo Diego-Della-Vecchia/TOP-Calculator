@@ -134,6 +134,7 @@ button:active {
 .clear, .delete {
     background-color: #001d64;
     color: #E1E0E0;
+    font-size: min(35px, 7vw);
 }
 
 .clear:hover, .delete:hover {

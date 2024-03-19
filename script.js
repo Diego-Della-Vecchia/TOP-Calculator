@@ -641,8 +641,7 @@ function back() {
             temporaryArray.pop();
             currentValue = temporaryArray.join("");
             currentCalculation.push(currentValue);
-            updateScreen(currentCalculation);
-            console.log(currentCalculation);
+            updateScreen(currentCalculation.join(""));
             currentCalculation.pop();
         }
     }
