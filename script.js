@@ -119,7 +119,6 @@ function updateValue(number) {
 
 function updateScreen(value) {
     operation.innerText = value;
-    console.log(value);
     result.innerText = calculate(currentCalculation);
 
 }
