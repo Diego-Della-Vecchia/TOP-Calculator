@@ -18,50 +18,13 @@ function updateArray(value) {
    
     if (currentValue === null);
 
-    else if (value === "delete"){
-        currentCalculation.push(currentValue)
-        currentValue = null;
-    }
+
     else {
     
         currentCalculation.push(currentValue)
         currentValue = null;
     }
 
-    if (value === "delete") {
-
-        temporary = currentCalculation[currentCalculation.length - 1];
-        if (temporary === ")") {
-            currentCalculation.pop();
-            parenthesis = true;
-        }
-
-        else if (temporary === "(") {
-            currentCalculation.pop();
-            parenthesis = false;
-        }
-        else if (temporary === undefined){
-            return;
-        }
-        else {
-            currentCalculation.pop();
-
-            temporaryArray = temporary.split("");
-
-            if (temporaryArray.includes("√")) temporaryArray.pop();
-            temporaryArray.pop();
-
-            if (temporaryArray.length === 0) {
-
-            }
-            else {
-            temporary = temporaryArray.join("");
-
-            currentCalculation.push(temporary);
-            }
-        }
-        }
-    
 
     
 
@@ -75,8 +38,8 @@ function updateArray(value) {
         currentCalculation[currentCalculation.length-1] === "/" ||
         currentCalculation[currentCalculation.length-1] === "*")){}
     
-    else if (value === "()" && (currentCalculation[currentCalculation.length-1] === "(" || currentCalculation[currentCalculation.length-1] === ")")){} 
-    else if ((value === "√" || value=="()")&& (currentCalculation[currentCalculation.length-1] === "√(" || currentCalculation[currentCalculation.length-1] === ")")){}
+    else if (value === "()" && (currentCalculation[currentCalculation.length-1] === "(")){} 
+    else if ((value === "√" || value=="()")&& (currentCalculation[currentCalculation.length-1] === "√(")){}
         else {
             
             if (value === "delete") {
@@ -94,12 +57,6 @@ function updateArray(value) {
                     squareRoot = false;
                 }
             
-                if (
-                    currentCalculation[currentCalculation.length-1] === "+" ||
-                    currentCalculation[currentCalculation.length-1] === "-" ||
-                    currentCalculation[currentCalculation.length-1] === "%" ||
-                    currentCalculation[currentCalculation.length-1] === "/" ||
-                    currentCalculation[currentCalculation.length-1] === "*"){ currentCalculation.pop();}
                     currentCalculation.push(value);
             }
             else if (value === "√"){
@@ -162,6 +119,7 @@ function updateValue(number) {
 
 function updateScreen(value) {
     operation.innerText = value;
+    console.log(value);
     result.innerText = calculate(currentCalculation);
 
 }
@@ -428,6 +386,7 @@ function calculate (arr) {
         if (isNaN(result)) {
             result = "Error";
         }
+        
     parenthesisPresent = false;
 
     parenthesisClosed = false;
@@ -439,6 +398,10 @@ function calculate (arr) {
     else {
         result = Math.round(result * roundValue) / roundValue;
     }
+    if (result === undefined){
+        result = ""
+    }
+
         return result;
     }
         
@@ -504,7 +467,7 @@ function scrollRight() {
 
 
 addEventListener("keydown", (key) => {
-    if (!userTyping){
+
     if (key.key === "Enter") {
         enter();
     }
@@ -575,7 +538,6 @@ addEventListener("keydown", (key) => {
         updateArray("√");
     
     }
-    }
 });
 
 let round = document.querySelector(".wrapper");
@@ -641,6 +603,48 @@ roundTo.addEventListener("change", () => {
 });
 
 
-roundTo.addEventListener("focus", () => userTyping = true);
 
-roundTo.addEventListener("blur", () => userTyping = false);
+
+function back() {
+    if(currentValue === null) {
+        temporary = currentCalculation[currentCalculation.length-1]
+        currentCalculation.pop();
+        if (currentCalculation.length === 0) {
+            currentCalculation = []
+            updateScreen("");
+        }
+        else {
+            currentValue = currentCalculation[currentCalculation.length-1];
+            currentCalculation.pop();
+            currentCalculation.push(currentValue);
+            updateScreen(currentCalculation);
+            currentCalculation.pop()
+        }
+        if (temporary === ")" ) {
+            parenthesis = true;
+            squareRoot = true;
+        }
+        else if(temporary="(") {
+           
+            parenthesis = false;
+            squareRoot = false;
+        }
+    }
+    else {
+        temporary = currentValue;
+
+        temporaryArray = currentValue.split("");
+        if (temporaryArray.length === 1){
+            currentValue = null
+            updateScreen(currentCalculation.join(""));
+        }
+        else {
+            temporaryArray.pop();
+            currentValue = temporaryArray.join("");
+            currentCalculation.push(currentValue);
+            updateScreen(currentCalculation);
+            console.log(currentCalculation);
+            currentCalculation.pop();
+        }
+    }
+}
