@@ -23,7 +23,7 @@
 
   
 .container {
-    background-color: #0098f1;   
+    background-color: red;   
     border-radius: 20px;
     display: flex;
     justify-content: center;
@@ -45,7 +45,6 @@
 .screen {
     background-color: #E1E0E0;
     width: min(440px, 85vw);
-    max-width: 85vw;
     height: min(160px, 15vh);
     margin: 25px ;
     border-radius: 20px 20px 5px 5px;
