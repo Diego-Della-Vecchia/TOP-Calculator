@@ -616,7 +616,7 @@ function back() {
             currentValue = currentCalculation[currentCalculation.length-1];
             currentCalculation.pop();
             currentCalculation.push(currentValue);
-            updateScreen(currentCalculation);
+            updateScreen(currentCalculation.join(""));
             currentCalculation.pop()
         }
         if (temporary === ")" ) {
