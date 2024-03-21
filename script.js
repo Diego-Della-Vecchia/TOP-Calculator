@@ -471,7 +471,7 @@ addEventListener("keydown", (key) => {
         enter();
     }
     if (key.key === "Backspace") {
-        updateArray("delete");
+        back();
     }
     if (key.key === "Escape") {
         clearScreen();
