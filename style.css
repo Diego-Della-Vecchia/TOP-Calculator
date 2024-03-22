@@ -17,7 +17,9 @@
 
   .title {
     font-size: min(120px, 22vw);   
-    color: #001d64;
+    color: transparent;
+    background: linear-gradient(30deg,#001d64,  #0098f1);
+    -webkit-background-clip: text;
     margin: min(60px, 3vh)
   }
 
